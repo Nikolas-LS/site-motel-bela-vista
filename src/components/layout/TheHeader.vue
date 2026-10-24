@@ -199,7 +199,7 @@ onBeforeUnmount(() => {
 .menu-panel {
   position: absolute;
   right: 0;
-  top: calc(100% + 14px);
+  top: calc(100% + 24px);
   width: min(320px, calc(100vw - 2.5rem));
   padding: 1.25rem;
   background: #fff;
@@ -331,7 +331,30 @@ onBeforeUnmount(() => {
     --gap: 4px;
   }
   .menu-panel {
-    top: calc(100% + 10px);
+    top: calc(100% + 22px);
+    width: min(240px, calc(100vw - 2rem));
+    padding: 0.85rem;
+    border-radius: 14px;
+  }
+  .menu-panel .item {
+    gap: 0.6rem;
+    padding: 0.5rem 0.2rem;
+    font-size: 1.1rem;
+  }
+  .menu-panel .item small {
+    font-size: 0.6rem;
+  }
+  .menu-panel .get {
+    margin-top: 0.75rem;
+    font-size: 0.85rem;
+  }
+  .menu-socials {
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+  }
+  .menu-socials a {
+    width: 32px;
+    height: 32px;
   }
 }
 </style>

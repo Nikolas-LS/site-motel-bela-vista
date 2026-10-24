@@ -135,7 +135,18 @@ useParallax(photo)
 
 @media (max-width: 720px) {
   .hero {
-    padding-top: 7.5rem;
+    padding-top: 6.5rem;
+  }
+  .status-tab {
+    gap: 0.4rem;
+    padding: 0.3rem 0.7rem;
+    font-size: 0.7rem;
+    margin-bottom: 3rem;
+  }
+  .status-tab .dot {
+    width: 6px;
+    height: 6px;
+    box-shadow: 0 0 0 2px rgba(12, 179, 0, 0.2);
   }
   .hero-actions {
     gap: 1.25rem;

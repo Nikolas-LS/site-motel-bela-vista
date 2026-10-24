@@ -53,7 +53,7 @@ const year = new Date().getFullYear()
   position: relative;
   overflow: hidden;
   margin-top: 8rem;
-  padding: 5rem var(--pad) 2rem;
+  padding: 1.5rem var(--pad) 1.25rem;
   color: #fff;
   background: radial-gradient(circle at 50% 0%, #2e2e2e 0%, #000 70%);
   border: 8px solid var(--field);
@@ -77,14 +77,14 @@ const year = new Date().getFullYear()
   display: grid;
   grid-template-columns: 1.6fr 1fr 1.2fr;
   gap: 3rem;
-  margin-bottom: 4rem;
+  margin-bottom: 1.75rem;
 }
 
 .footer-logo {
   position: relative;
-  width: 96px;
+  width: 52px;
   aspect-ratio: 1;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
   border-radius: 50%;
   background: #fff;
   overflow: hidden;
@@ -165,7 +165,7 @@ const year = new Date().getFullYear()
   justify-content: space-between;
   align-items: center;
   gap: 1rem;
-  padding-top: 1.75rem;
+  padding-top: 1.25rem;
   border-top: 1px solid rgba(255, 255, 255, 0.12);
   font-size: 0.75rem;
   color: rgba(255, 255, 255, 0.5);
@@ -188,11 +188,34 @@ const year = new Date().getFullYear()
   }
   .footer-top {
     grid-template-columns: 1fr;
-    gap: 2.25rem;
+    gap: 1.25rem;
+    margin-bottom: 1.5rem;
+  }
+  .footer .body {
+    font-size: 0.85rem;
+    margin-bottom: 0.9rem;
+  }
+  .footer-socials a {
+    width: 38px;
+    height: 38px;
+    font-size: 1rem;
+  }
+  .footer-col h4 {
+    font-size: 1.15rem;
+    margin-bottom: 0.5rem;
+  }
+  .footer-col li {
+    margin-bottom: 0.3rem;
+  }
+  .footer-col a,
+  .footer-col span {
+    font-size: 0.85rem;
   }
   .footer-bottom {
     flex-direction: column;
     text-align: center;
+    gap: 0.6rem;
+    padding-top: 1rem;
   }
 }
 </style>
