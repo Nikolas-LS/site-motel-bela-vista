@@ -1,7 +1,25 @@
 <script setup>
+import { reactive } from 'vue'
 import IconArrowUp from '~icons/solar/arrow-right-up-linear'
+import IconPrev from '~icons/solar/alt-arrow-left-linear'
+import IconNext from '~icons/solar/alt-arrow-right-linear'
 import { suites } from '@/data/suites'
 import { suiteLink } from '@/utils/whatsapp'
+
+// Foto atual de cada suíte com carrossel (a rolagem é feita por scroll-snap).
+const current = reactive({})
+
+const photosOf = (suite) => suite.images ?? [suite.image]
+
+function onScroll(name, event) {
+  const el = event.currentTarget
+  current[name] = Math.round(el.scrollLeft / el.clientWidth)
+}
+
+function go(name, event, step) {
+  const track = event.currentTarget.parentElement.querySelector('.suite-track')
+  track.scrollBy({ left: step * track.clientWidth, behavior: 'smooth' })
+}
 </script>
 
 <template>
@@ -23,7 +41,42 @@ import { suiteLink } from '@/utils/whatsapp'
         class="card card-motion suite"
       >
         <div class="suite-photo">
-          <img :src="suite.image" :alt="`Suíte ${suite.name} (foto ilustrativa)`" loading="lazy" />
+          <div class="suite-track" @scroll.passive="onScroll(suite.name, $event)">
+            <img
+              v-for="(photo, i) in photosOf(suite)"
+              :key="i"
+              :src="photo"
+              :alt="`Suíte ${suite.name}, foto ${i + 1} (ilustrativa)`"
+              loading="lazy"
+            />
+          </div>
+          <template v-if="photosOf(suite).length > 1">
+            <button
+              v-show="(current[suite.name] ?? 0) > 0"
+              class="suite-arrow prev"
+              type="button"
+              aria-label="Foto anterior"
+              @click="go(suite.name, $event, -1)"
+            >
+              <IconPrev />
+            </button>
+            <button
+              v-show="(current[suite.name] ?? 0) < photosOf(suite).length - 1"
+              class="suite-arrow next"
+              type="button"
+              aria-label="Próxima foto"
+              @click="go(suite.name, $event, 1)"
+            >
+              <IconNext />
+            </button>
+            <div class="suite-dots" aria-hidden="true">
+              <span
+                v-for="(_, i) in photosOf(suite)"
+                :key="i"
+                :class="{ on: i === (current[suite.name] ?? 0) }"
+              />
+            </div>
+          </template>
         </div>
         <div class="suite-body">
           <h3 class="h3 suite-name"><component :is="suite.icon" class="icon" />{{ suite.name }}</h3>
@@ -102,10 +155,69 @@ import { suiteLink } from '@/utils/whatsapp'
   border-radius: 10px;
   overflow: hidden;
 }
-.suite-photo img {
+.suite-track {
+  display: flex;
+  height: 100%;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+.suite-track::-webkit-scrollbar {
+  display: none;
+}
+.suite-track img {
+  flex: 0 0 100%;
   width: 100%;
   height: 100%;
   object-fit: cover;
+  scroll-snap-align: center;
+}
+
+.suite-arrow {
+  position: absolute;
+  top: 50%;
+  width: 1.9rem;
+  height: 1.9rem;
+  display: grid;
+  place-items: center;
+  translate: 0 -50%;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.88);
+  color: var(--ink);
+  font-size: 1.05rem;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  transition: background 0.3s var(--ease-soft), color 0.3s var(--ease-soft), scale 0.3s var(--ease-soft);
+}
+.suite-arrow.prev { left: 0.6rem; }
+.suite-arrow.next { right: 0.6rem; }
+.suite-arrow:hover {
+  background: var(--red);
+  color: #fff;
+}
+.suite-arrow:active {
+  scale: 0.9;
+}
+
+.suite-dots {
+  position: absolute;
+  bottom: 0.6rem;
+  left: 50%;
+  display: flex;
+  gap: 0.35rem;
+  translate: -50% 0;
+  pointer-events: none;
+}
+.suite-dots span {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.55);
+  transition: background 0.3s, scale 0.3s;
+}
+.suite-dots span.on {
+  background: #fff;
+  scale: 1.3;
 }
 
 .suite-body {
