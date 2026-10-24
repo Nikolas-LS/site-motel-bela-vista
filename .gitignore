@@ -22,3 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Referência de design (arquivos de terceiros, não versionados)
+hanzo-design-system/

@@ -4,12 +4,10 @@ import { marquee } from '../data/site'
 </script>
 
 <template>
-  <div class="marquee-section" aria-hidden="true">
-    <div class="marquee-track">
-      <div v-for="n in 2" :key="n" class="marquee-item">
-        <template v-for="item in marquee" :key="item">
-          <span>{{ item }}</span><div class="dot"></div>
-        </template>
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-track">
+      <div v-for="n in 2" :key="n" class="ticker-item">
+        <template v-for="item in marquee" :key="item"><span>{{ item }}</span><i></i></template>
       </div>
     </div>
   </div>

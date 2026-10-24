@@ -1,5 +1,6 @@
 <script setup>
 import { onMounted, onBeforeUnmount, ref } from 'vue'
+import WordReveal from './WordReveal.vue'
 import fachada from '../assets/fachada.png'
 import logo from '../assets/logo.png'
 import { stats } from '../data/site'
@@ -22,38 +23,41 @@ const animate = () => {
 }
 
 onMounted(() => {
-  if (!('IntersectionObserver' in window)) { display.value = stats.map((s) => Number(s.value)); return }
+  if (!('IntersectionObserver' in window) || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    display.value = stats.map((s) => Number(s.value))
+    return
+  }
   io = new IntersectionObserver(([e]) => {
     if (e.isIntersecting) { animate(); io.disconnect() }
-  }, { threshold: 0.5 })
+  }, { threshold: 0.4 })
   io.observe(root.value)
 })
 onBeforeUnmount(() => io?.disconnect())
 </script>
 
 <template>
-  <section id="sobre" class="about">
-    <div v-reveal class="about-images">
-      <div class="about-frame"></div>
-      <img class="about-img-main" :src="fachada" alt="Fachada do Motel Bela Vista" loading="lazy" />
-      <div class="about-logo"><img :src="logo" alt="Logotipo Motel Bela Vista" /></div>
-      <div class="about-accent">BV</div>
+  <section id="sobre" class="section about">
+    <div class="about-grid">
+      <div>
+        <div v-reveal class="eyebrow left">O Motel</div>
+        <WordReveal
+          class="lead"
+          text="Um refúgio de conforto e discrição, pensado para quem valoriza privacidade e um atendimento que cuida de cada detalhe."
+        />
+        <p v-reveal="1" class="body">
+          Nossas suítes combinam ambientes aconchegantes, decoração cuidadosa e estrutura completa para tornar cada momento especial.
+          Do acesso reservado à limpeza impecável, tudo foi planejado para que você se sinta à vontade desde a chegada.
+        </p>
+      </div>
+      <div v-reveal="2" class="about-visual">
+        <div class="dark-frame about-photo"><img :src="fachada" alt="Fachada do Motel Bela Vista" loading="lazy" /></div>
+        <div class="card about-logo"><img :src="logo" alt="Logotipo Motel Bela Vista" /></div>
+      </div>
     </div>
-    <div class="about-content">
-      <div v-reveal class="section-tag"><span class="section-tag-line"></span><span class="section-tag-text">O Motel</span></div>
-      <h2 v-reveal="1" class="section-title">UM REFÚGIO DE<br />CONFORTO E<br /><span class="italic">discrição.</span></h2>
-      <p v-reveal="2" class="about-text">
-        O Motel Bela Vista foi pensado para quem valoriza privacidade, conforto e um atendimento que cuida de cada detalhe.
-        Nossas suítes combinam ambientes aconchegantes, decoração cuidadosa e estrutura completa para tornar cada momento especial.
-      </p>
-      <p v-reveal="3" class="about-text">
-        Do acesso reservado à limpeza impecável, tudo foi planejado para que você se sinta à vontade desde a chegada.
-      </p>
-      <div ref="root" v-reveal="4" class="about-stats">
-        <div v-for="(s, i) in stats" :key="s.label">
-          <div class="stat-number">{{ display[i] }}{{ s.suffix }}</div>
-          <div class="stat-label">{{ s.label }}</div>
-        </div>
+    <div ref="root" class="stats">
+      <div v-for="(s, i) in stats" :key="s.label" v-reveal="i" class="card stat">
+        <div class="numeral">{{ display[i] }}<small>{{ s.suffix }}</small></div>
+        <div class="meta">{{ s.label }}</div>
       </div>
     </div>
   </section>

@@ -24,9 +24,10 @@ Site institucional (landing page) do **Motel Bela Vista**, em São Leopoldo - RS
 ## Tecnologias
 
 - [Vue 3](https://vuejs.org/) (`<script setup>`) e [Vite](https://vite.dev/)
-- CSS próprio, baseado em um design system (variáveis CSS, animações e scroll reveal)
+- CSS próprio, baseado no design system Hanzo (campo claro, cards com anel, botões pílula, tipografia justa), adaptado às cores do motel
+- Efeitos: título letra por letra, texto que acende palavra por palavra ao rolar, cards inclinados, rabiscos desenhados e revelação ao rolar
 - [unplugin-icons](https://github.com/unplugin/unplugin-icons) com o conjunto de ícones Solar
-- Fontes: Bebas Neue, Playfair Display e Inter (Google Fonts)
+- Fontes: Inter e Instrument Serif (Google Fonts)
 
 ## Como rodar
 
@@ -51,7 +52,7 @@ src/
 ├── directives/reveal.js  # animação de entrada ao rolar a página
 ├── App.vue
 └── style.css          # design tokens e estilos globais
-design-system/         # referência visual usada como base do design
+hanzo-design-system/   # referência visual usada como base do design (não versionada)
 img/                   # imagens originais (logo e fachada)
 ```
 
