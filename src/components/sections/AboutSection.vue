@@ -143,7 +143,7 @@ const { root: statsRoot, display } = useCountUp(stats.map((stat) => stat.value))
   }
   .about-logo {
     left: -0.5rem;
-    width: 110px;
+    width: 80px;
   }
 }
 </style>
