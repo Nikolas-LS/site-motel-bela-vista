@@ -16,10 +16,10 @@ import { marquee } from '@/data/marquee'
 <style scoped>
 .ticker {
   margin: 0 var(--pad);
-  padding: 1.1rem 0;
+  padding: 0.65rem 0;
   overflow: hidden;
   background: var(--ink-2);
-  border-radius: 999px;
+  border-radius: 16px;
   box-shadow: 0 0 0 8px rgba(255, 255, 255, 0.25), var(--shadow);
 }
 
@@ -27,9 +27,6 @@ import { marquee } from '@/data/marquee'
   display: flex;
   width: max-content;
   animation: marquee 20s linear infinite;
-}
-.ticker:hover .ticker-track {
-  animation-play-state: paused;
 }
 @keyframes marquee {
   to { transform: translateX(-50%); }
@@ -44,25 +41,14 @@ import { marquee } from '@/data/marquee'
 }
 .ticker-item span {
   display: inline-block;
-  color: rgba(255, 255, 255, 0.6);
-  font-size: 1rem;
-  letter-spacing: -0.02em;
-  transition: color 0.39s var(--ease-soft), transform 0.45s var(--ease-soft);
-}
-.ticker-item span:hover {
   color: #fff;
-  transform: translateY(-3px);
+  font-size: 0.95rem;
+  letter-spacing: -0.02em;
 }
 .ticker-item i {
   width: 7px;
   height: 7px;
   border-radius: 50%;
   background: var(--red);
-}
-
-@media (max-width: 720px) {
-  .ticker {
-    border-radius: 40px;
-  }
 }
 </style>
