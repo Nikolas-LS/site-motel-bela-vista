@@ -12,7 +12,7 @@ const observer =
             el.classList.add('visible')
             observer.unobserve(el)
             // remove o atraso depois da entrada para não atrasar o hover
-            if (el.style.transitionDelay) setTimeout(() => (el.style.transitionDelay = ''), 1400)
+            if (el.style.transitionDelay) setTimeout(() => (el.style.transitionDelay = ''), 900)
           }
         },
         { threshold: 0.1, rootMargin: '0px 0px -50px 0px' },
@@ -22,7 +22,7 @@ const observer =
 export default {
   mounted(el, { value, modifiers }) {
     el.classList.add(modifiers.draw ? 'draw' : 'reveal')
-    if (value) el.style.transitionDelay = `${value * 0.1}s`
+    if (value) el.style.transitionDelay = `${value * 0.07}s`
     if (observer) observer.observe(el)
     else el.classList.add('visible')
   },

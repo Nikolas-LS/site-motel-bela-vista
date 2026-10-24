@@ -3,14 +3,14 @@ import IconPin from '~icons/solar/map-point-bold'
 import IconPhone from '~icons/solar/phone-bold'
 import IconClock from '~icons/solar/clock-circle-bold'
 import IconArrow from '~icons/solar/arrow-right-linear'
-import fachada from '../assets/fachada.png'
+import fachada from '../assets/fachada.jpg'
 import { site } from '../data/site'
 </script>
 
 <template>
   <section id="localizacao" class="section location">
     <div class="location-grid">
-      <div v-reveal class="glass contact-card">
+      <div v-reveal v-tilt="{ max: 2 }" class="glass contact-card spot">
         <div class="eyebrow left">Localização</div>
         <h2 class="h2" style="margin-bottom: 1.5rem">Venha nos <span class="tone">visitar</span></h2>
         <div class="contact-item">
@@ -29,7 +29,7 @@ import { site } from '../data/site'
           <IconClock class="icon" />
           <div><strong>Funcionamento</strong><p>{{ site.hours }}</p></div>
         </div>
-        <a class="btn" :href="site.mapsLink" target="_blank" rel="noopener">
+        <a v-magnetic class="btn" :href="site.mapsLink" target="_blank" rel="noopener">
           Como chegar <span class="btn-arrow"><IconArrow class="icon" /></span>
         </a>
       </div>

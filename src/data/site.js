@@ -13,6 +13,7 @@ export const site = {
   mapsLink: 'https://www.google.com/maps/place/Motel+Bela+Vista/data=!4m2!3m1!1s0x95195cc49acabad7:0x3cc7f577378cc129',
   hours: 'Aberto 24 horas, todos os dias',
   instagram: 'https://www.instagram.com/motelbelavista/',
+  facebook: 'https://www.facebook.com/motelbelavista/?locale=pt_BR',
 }
 
 export const whatsappLink = (msg = 'Olá! Gostaria de informações sobre o Motel Bela Vista.') =>
@@ -36,10 +37,10 @@ export const stats = [
 // TODO: descrições provisórias e valores reais das suítes
 export const suites = [
   { image: 'standard', icon: 'bed', name: 'Standard', desc: 'Conforto essencial em um ambiente aconchegante e reservado, ideal para um momento a dois.', price: 'Consulte', tag: 'Conforto' },
-  { image: 'mini-suite', icon: 'heart', name: 'Mini-Suíte', desc: 'Espaço charmoso e intimista, com tudo o que você precisa para relaxar.', price: 'Consulte', tag: 'Charme' },
-  { image: 'suite', icon: 'fire', name: 'Suíte', desc: 'Mais amplitude e sofisticação para tornar a noite ainda mais especial.', price: 'Consulte', tag: 'Romance' },
   { image: 'luxo', icon: 'star', name: 'Luxo', desc: 'Decoração refinada, ambiente amplo e comodidades superiores.', price: 'Consulte', tag: 'Luxo' },
   { image: 'super-luxo', icon: 'crown', name: 'Super Luxo', desc: 'Nossa experiência mais completa: máximo conforto, espaço e requinte.', price: 'Consulte', tag: 'Premium' },
+  { image: 'mini-suite', icon: 'heart', name: 'Mini-Suíte', desc: 'Espaço charmoso e intimista, com tudo o que você precisa para relaxar.', price: 'Consulte', tag: 'Charme' },
+  { image: 'suite', icon: 'fire', name: 'Suíte', desc: 'Mais amplitude e sofisticação para tornar a noite ainda mais especial.', price: 'Consulte', tag: 'Romance' },
 ]
 
 export const comforts = [

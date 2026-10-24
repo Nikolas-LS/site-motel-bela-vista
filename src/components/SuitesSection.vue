@@ -15,10 +15,9 @@ import { suiteImages } from '../data/suiteImages'
       </svg>
     </div>
     <div class="suites-grid">
-      <article v-for="(s, i) in suites" :key="s.name" v-reveal="i % 3" class="card suite">
+      <article v-for="(s, i) in suites" :key="s.name" v-reveal="i % 3" v-tilt="{ max: 6 }" class="card suite spot">
         <div class="suite-photo">
           <img :src="suiteImages[s.image]" :alt="`Suíte ${s.name} (foto ilustrativa)`" loading="lazy" />
-          <span class="suite-tag">{{ s.tag }}</span>
         </div>
         <div class="suite-body">
           <h3 class="h3 suite-name"><component :is="icons[s.icon]" class="icon" />{{ s.name }}</h3>

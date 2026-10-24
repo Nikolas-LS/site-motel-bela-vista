@@ -1,4 +1,4 @@
-// Fotos ilustrativas (banco de imagens). TODO: trocar pelas fotos reais das suítes.
+// Fotos ilustrativas (Unsplash, uso livre). TODO: trocar pelas fotos reais das suítes.
 import standard from '../assets/suites/standard.jpg'
 import miniSuite from '../assets/suites/mini-suite.jpg'
 import suite from '../assets/suites/suite.jpg'

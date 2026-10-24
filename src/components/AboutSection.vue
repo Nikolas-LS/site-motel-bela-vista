@@ -1,7 +1,7 @@
 <script setup>
 import { onMounted, onBeforeUnmount, ref } from 'vue'
 import WordReveal from './WordReveal.vue'
-import fachada from '../assets/fachada.png'
+import fachada from '../assets/fachada.jpg'
 import logo from '../assets/logo.png'
 import { stats } from '../data/site'
 
@@ -50,12 +50,12 @@ onBeforeUnmount(() => io?.disconnect())
         </p>
       </div>
       <div v-reveal="2" class="about-visual">
-        <div class="dark-frame about-photo"><img :src="fachada" alt="Fachada do Motel Bela Vista" loading="lazy" /></div>
+        <div v-tilt="{ max: 4 }" class="dark-frame about-photo spot"><img :src="fachada" alt="Fachada do Motel Bela Vista" loading="lazy" /></div>
         <div class="card about-logo"><img :src="logo" alt="Logotipo Motel Bela Vista" /></div>
       </div>
     </div>
     <div ref="root" class="stats">
-      <div v-for="(s, i) in stats" :key="s.label" v-reveal="i" class="card stat">
+      <div v-for="(s, i) in stats" :key="s.label" v-reveal="i" v-tilt="{ max: 5 }" class="card stat spot">
         <div class="numeral">{{ display[i] }}<small>{{ s.suffix }}</small></div>
         <div class="meta">{{ s.label }}</div>
       </div>

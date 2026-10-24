@@ -1,6 +1,7 @@
 <script setup>
-import IconInsta from '~icons/solar/camera-bold'
-import IconWhats from '~icons/solar/chat-round-dots-bold'
+import IconInsta from '~icons/simple-icons/instagram'
+import IconWhats from '~icons/simple-icons/whatsapp'
+import IconFace from '~icons/simple-icons/facebook'
 import logo from '../assets/logo.png'
 import { navLinks, site, whatsappLink } from '../data/site'
 
@@ -16,6 +17,7 @@ const year = new Date().getFullYear()
         <div class="footer-socials">
           <a :href="site.instagram" target="_blank" rel="noopener" aria-label="Instagram"><IconInsta class="icon" /></a>
           <a :href="whatsappLink()" target="_blank" rel="noopener" aria-label="WhatsApp"><IconWhats class="icon" /></a>
+          <a :href="site.facebook" target="_blank" rel="noopener" aria-label="Facebook"><IconFace class="icon" /></a>
         </div>
       </div>
       <div class="footer-col">
