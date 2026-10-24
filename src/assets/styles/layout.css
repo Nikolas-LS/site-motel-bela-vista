@@ -1,0 +1,18 @@
+.section {
+  padding: 8rem var(--pad);
+  position: relative;
+}
+
+.section-head {
+  margin-bottom: 4.5rem;
+  position: relative;
+}
+
+@media (max-width: 720px) {
+  .section {
+    padding: 5rem var(--pad);
+  }
+  .section-head {
+    margin-bottom: 3rem;
+  }
+}

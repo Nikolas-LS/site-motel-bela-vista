@@ -1,0 +1,81 @@
+.display {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(4rem, 15vw, 10.5rem);
+  line-height: 0.95;
+  letter-spacing: -0.01em;
+}
+
+.h2 {
+  font-weight: 400;
+  font-size: clamp(1.9rem, 4.2vw, 3rem);
+  line-height: 1.05;
+  letter-spacing: -0.045em;
+}
+.h2 .tone {
+  color: var(--text-2);
+}
+
+.h3 {
+  font-weight: 400;
+  font-size: clamp(1.15rem, 2vw, 1.5rem);
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+}
+
+.body {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--text-2);
+}
+
+.meta {
+  font-size: 0.75rem;
+  letter-spacing: 0.01em;
+}
+
+.numeral {
+  font-weight: 300;
+  font-size: clamp(3rem, 6vw, 4.5rem);
+  letter-spacing: -0.06em;
+  line-height: 1;
+}
+
+.center {
+  text-align: center;
+}
+
+/* Eyebrow: serif itálico entre linhas que esmaecem */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1.5rem;
+  color: var(--text-2);
+  margin-bottom: 1.25rem;
+}
+.eyebrow::before,
+.eyebrow::after {
+  content: '';
+  width: 56px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--divider));
+}
+.eyebrow::after {
+  transform: scaleX(-1);
+}
+.eyebrow.left::before {
+  display: none;
+}
+/* As linhas se abrem quando o eyebrow entra na tela (v-reveal) */
+.eyebrow.reveal::before,
+.eyebrow.reveal::after {
+  width: 0;
+  transition: width 0.77s var(--ease-soft) 0.22s;
+}
+.eyebrow.reveal.visible::before,
+.eyebrow.reveal.visible::after {
+  width: 56px;
+}

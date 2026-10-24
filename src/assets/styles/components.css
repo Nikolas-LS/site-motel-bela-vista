@@ -1,0 +1,154 @@
+/* Blocos visuais reutilizados em várias seções. */
+
+/* ===== Superfícies ===== */
+.card {
+  background: var(--white);
+  border-radius: 16px;
+  box-shadow: var(--ring), var(--shadow);
+}
+
+.glass {
+  background: var(--glass);
+  border-radius: 16px;
+  box-shadow: 0 0 0 8px rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(10px);
+}
+
+.dark-frame {
+  background: #2b2b2b;
+  border-radius: 24px;
+  box-shadow: 0 0 0 8px rgba(255, 255, 255, 0.25), var(--shadow);
+  overflow: hidden;
+  position: relative;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--white);
+  border: 1px solid #fff;
+  border-radius: 999px;
+  padding: 0.5rem 1rem;
+  font-size: 0.8125rem;
+  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.4), 6px 8px 12px rgba(0, 0, 0, 0.08);
+  transition:
+    transform 0.45s var(--ease-soft),
+    background 0.34s var(--ease-soft),
+    color 0.34s var(--ease-soft),
+    border-color 0.34s;
+}
+
+.icon {
+  width: 1em;
+  height: 1em;
+  flex-shrink: 0;
+}
+
+/* Cards que flutuam e se inclinam (suítes e números): entrada, elevação e tilt suaves. */
+.card-motion {
+  transition:
+    rotate 0.46s var(--ease-soft),
+    translate 0.46s var(--ease-soft),
+    box-shadow 0.46s var(--ease-soft),
+    opacity 0.46s var(--ease-soft),
+    transform 0.5s var(--ease-soft);
+}
+.card-motion.is-tilting {
+  transition:
+    rotate 0.46s var(--ease-soft),
+    translate 0.46s var(--ease-soft),
+    box-shadow 0.46s var(--ease-soft),
+    opacity 0.46s var(--ease-soft),
+    transform 0.44s var(--ease-follow);
+}
+
+/* ===== Botões ===== */
+.btn {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+  background: var(--ink);
+  color: #fff;
+  padding: 0.45rem 0.45rem 0.45rem 1.5rem;
+  border-radius: 999px;
+  font-size: 1rem;
+  box-shadow: 0 0 0 8px rgba(255, 255, 255, 0.45), inset 0 -3px 6px rgba(255, 255, 255, 0.12);
+  transition:
+    transform 0.5s var(--ease-soft),
+    scale 0.45s var(--ease-soft),
+    color 0.34s,
+    background 0.4s var(--ease-soft);
+}
+.btn:hover {
+  background: var(--red);
+  transform: translate(var(--tx, 0px), var(--ty, 0px));
+  scale: 1.05;
+}
+.btn:active {
+  scale: 0.94;
+  transition-duration: 0.14s;
+}
+
+.btn-arrow {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.7);
+  transition:
+    background 0.45s var(--ease-soft),
+    color 0.45s var(--ease-soft),
+    transform 0.45s var(--ease-soft);
+}
+.btn:hover .btn-arrow {
+  background: #fff;
+  color: var(--red);
+}
+.btn:hover .btn-arrow .icon {
+  animation: arrow-swap 0.56s var(--ease-soft);
+}
+
+/* Variante clara (sobre fundo escuro/vermelho) */
+.btn.on-ink {
+  background: #fff;
+  color: var(--ink);
+  box-shadow: 0 0 0 8px rgba(255, 255, 255, 0.3);
+}
+.btn.on-ink:hover {
+  background: var(--ink);
+  color: #fff;
+}
+.btn.on-ink .btn-arrow {
+  background: var(--ink);
+  color: #fff;
+}
+.btn.on-ink:hover .btn-arrow {
+  background: var(--red);
+  color: #fff;
+}
+
+@keyframes arrow-swap {
+  0% { transform: translateX(0); opacity: 1; }
+  45% { transform: translateX(160%); opacity: 0; }
+  46% { transform: translateX(-160%); opacity: 0; }
+  100% { transform: translateX(0); opacity: 1; }
+}
+
+/* ===== Link com sublinhado que cresce ===== */
+.link {
+  color: var(--red);
+  padding-bottom: 2px;
+  background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat;
+  transition: background-size 0.5s var(--ease-soft);
+}
+.link:hover {
+  background-size: 100% 1px;
+}

@@ -1,0 +1,65 @@
+/* Estilos que sustentam as diretivas (v-reveal, v-tilt, v-magnetic) e o ripple de clique. */
+
+/* v-reveal: fade + subida ao entrar na tela */
+.reveal {
+  opacity: 0;
+  translate: 0 56px;
+  transition: opacity 0.7s var(--ease-soft), translate 0.8s var(--ease-soft);
+}
+.reveal.visible {
+  opacity: 1;
+  translate: 0 0;
+}
+
+/* v-reveal.draw: desenha o traço de um <svg> */
+.draw path {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset 0.84s var(--ease-soft) 0.07s;
+}
+.draw.visible path {
+  stroke-dashoffset: 0;
+}
+
+/* v-tilt: inclinação 3D seguindo o mouse */
+.tilt {
+  transition: transform 0.67s var(--ease-soft);
+  will-change: transform;
+}
+.tilt.is-tilting {
+  transition: transform 0.39s var(--ease-follow); /* segue o mouse com atraso suave */
+}
+
+/* v-magnetic: o elemento "flutua" até o cursor */
+[data-magnetic] {
+  transform: translate(var(--tx, 0px), var(--ty, 0px));
+}
+.is-mag {
+  transition-duration: 0.34s !important;
+  transition-timing-function: var(--ease-follow) !important;
+}
+
+/* Ripple de clique (criado por utils/ripple.js) */
+.ripple {
+  position: absolute;
+  z-index: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.45);
+  transform: scale(0);
+  animation: ripple 0.73s var(--ease-soft) forwards;
+  pointer-events: none;
+}
+.btn.on-ink .ripple,
+.menu-panel .ripple {
+  background: rgba(212, 32, 46, 0.25);
+}
+@keyframes ripple {
+  to { transform: scale(1); opacity: 0; }
+}
+
+/* Movimento reduzido: mantém os hovers suaves, remove só entradas deslizantes e inclinação */
+@media (prefers-reduced-motion: reduce) {
+  .reveal { translate: 0 0; }
+  .tilt { transform: none !important; }
+  .draw path { stroke-dashoffset: 0; }
+}
