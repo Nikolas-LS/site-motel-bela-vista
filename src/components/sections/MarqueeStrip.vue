@@ -20,7 +20,7 @@ import { marquee } from '@/data/marquee'
   overflow: hidden;
   background: var(--ink-2);
   border-radius: 16px;
-  box-shadow: 0 0 0 8px rgba(255, 255, 255, 0.25), var(--shadow);
+  box-shadow: 0 0 0 8px rgba(var(--halo), 0.25), var(--shadow);
 }
 
 .ticker-track {

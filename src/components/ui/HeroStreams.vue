@@ -51,7 +51,8 @@ function resize() {
 function drawOriginGlow(originX, originY) {
   const radius = Math.max(width, height) * 0.32
   const glow = ctx.createRadialGradient(originX, originY, 0, originX, originY, radius)
-  glow.addColorStop(0, 'rgba(255, 255, 255, 0.95)')
+  const core = getComputedStyle(document.documentElement).getPropertyValue('--glow-core')
+  glow.addColorStop(0, `rgba(${core}, 0.95)`)
   glow.addColorStop(0.12, `rgba(${RED}, 0.4)`)
   glow.addColorStop(0.45, `rgba(${RED}, 0.1)`)
   glow.addColorStop(1, `rgba(${RED}, 0)`)

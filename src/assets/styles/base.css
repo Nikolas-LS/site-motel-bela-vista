@@ -14,7 +14,7 @@ body {
   font-family: var(--sans);
   font-optical-sizing: auto;
   color: var(--text);
-  background: linear-gradient(225deg, #fff 0%, var(--field) 100%) fixed;
+  background: linear-gradient(225deg, var(--bg-from) 0%, var(--bg-to) 100%) fixed;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   line-height: 1.5;
@@ -28,9 +28,9 @@ body::before {
   z-index: -1;
   pointer-events: none;
   background:
-    linear-gradient(105deg, transparent 10%, rgba(255, 255, 255, 0.55) 14%, transparent 22%),
-    linear-gradient(105deg, transparent 38%, rgba(255, 255, 255, 0.4) 41%, transparent 47%),
-    linear-gradient(105deg, transparent 62%, rgba(255, 255, 255, 0.5) 66%, transparent 74%);
+    linear-gradient(105deg, transparent 10%, rgba(var(--halo), 0.55) 14%, transparent 22%),
+    linear-gradient(105deg, transparent 38%, rgba(var(--halo), 0.4) 41%, transparent 47%),
+    linear-gradient(105deg, transparent 62%, rgba(var(--halo), 0.5) 66%, transparent 74%);
 }
 
 /* Granulado fixo (4%) */
@@ -84,6 +84,6 @@ ul {
   background: var(--field);
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--ink);
+  background: var(--btn-bg);
   border-radius: 4px;
 }

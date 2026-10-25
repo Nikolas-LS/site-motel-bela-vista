@@ -1,21 +1,33 @@
 /* Design tokens do Motel Bela Vista: campo claro, cards brancos com anel,
    pílulas pretas e tipografia justa, nas cores vermelho, branco e preto. */
 :root {
-  /* Cores */
+  color-scheme: light;
+
+  /* Cores (tema claro) */
   --ink: #000;
   --ink-2: #262626;
   --field: #d9d9d9;
-  --white: #fff;
+  --bg-from: #fff; /* gradiente do fundo da página */
+  --bg-to: var(--field);
+  --white: #fff; /* superfície dos cards */
   --glass: rgba(255, 255, 255, 0.5);
+  --halo: 255, 255, 255; /* cor (RGB) dos anéis e raios de luz em volta dos cards */
   --text: #000;
   --text-2: rgba(0, 0, 0, 0.5);
   --red: #d4202e;
+  --red-hover: #b81d2a;
   --green: #0cb300;
   --hair: rgba(0, 0, 0, 0.1);
   --divider: rgba(0, 0, 0, 0.25);
+  --soft: rgba(0, 0, 0, 0.06); /* fundo de botões redondos discretos */
+  --btn-bg: #000; /* botões sólidos (pílulas pretas) */
+  --btn-fg: #fff;
+  --btn-arrow-bg: rgba(255, 255, 255, 0.12); /* círculo da seta dentro do botão */
+  --btn-arrow-fg: rgba(255, 255, 255, 0.7);
+  --glow-core: 255, 255, 255; /* centro do brilho do hero */
 
   /* Sombras */
-  --ring: 0 0 0 8px rgba(255, 255, 255, 0.45);
+  --ring: 0 0 0 8px rgba(var(--halo), 0.45);
   --shadow: 12px 16px 16px rgba(0, 0, 0, 0.1);
 
   /* Tipografia */
@@ -30,4 +42,32 @@
 
   /* Layout */
   --pad: clamp(1.25rem, 5vw, 7.5rem);
+}
+
+/* Tema escuro: ativado por data-theme="dark" no <html> (ver composables/useTheme.js).
+   Mesma identidade (vermelho, branco e preto), com campo grafite e cards um tom acima do fundo. */
+:root[data-theme='dark'] {
+  color-scheme: dark;
+
+  --ink-2: #0a080b;
+  --field: #2b272c;
+  --bg-from: #1e1b20;
+  --bg-to: #0f0d10;
+  --white: #28242b;
+  --glass: rgba(40, 36, 43, 0.6);
+  --halo: 46, 42, 50;
+  --text: #f3f1f2;
+  --text-2: rgba(255, 255, 255, 0.55);
+  --red: #ea3a47;
+  --red-hover: #d12c39;
+  --hair: rgba(255, 255, 255, 0.12);
+  --divider: rgba(255, 255, 255, 0.25);
+  --soft: rgba(255, 255, 255, 0.08);
+  --btn-bg: #f3f1f2;
+  --btn-fg: #141214;
+  --btn-arrow-bg: rgba(0, 0, 0, 0.1);
+  --btn-arrow-fg: rgba(0, 0, 0, 0.6);
+  --glow-core: 234, 58, 71;
+
+  --shadow: 12px 16px 20px rgba(0, 0, 0, 0.45);
 }

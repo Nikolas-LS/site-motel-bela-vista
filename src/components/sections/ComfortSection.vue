@@ -69,10 +69,10 @@ import { comforts } from '@/data/comforts'
   height: 48px;
   margin-bottom: 1.25rem;
   border-radius: 50%;
-  background: #fff;
+  background: var(--white);
   color: var(--red);
   font-size: 1.4rem;
-  box-shadow: 0 0 0 5px rgba(255, 255, 255, 0.5), 5px 7px 10px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 0 0 5px rgba(var(--halo), 0.5), 5px 7px 10px rgba(0, 0, 0, 0.08);
   transition:
     background 0.27s var(--ease-soft),
     color 0.27s var(--ease-soft),

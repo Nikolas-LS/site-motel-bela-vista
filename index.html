@@ -4,6 +4,21 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#d9d9d9" />
+    <script>
+      // Define o tema antes da página aparecer: escolha salva ou tema do aparelho.
+      (function () {
+        var theme = 'light'
+        try {
+          var stored = localStorage.getItem('theme')
+          if (stored === 'dark' || stored === 'light') theme = stored
+          else if (window.matchMedia('(prefers-color-scheme: dark)').matches) theme = 'dark'
+        } catch (e) {}
+        document.documentElement.dataset.theme = theme
+        if (theme === 'dark') document.querySelector('meta[name="theme-color"]').content = '#0f0d10'
+      })()
+    </script>
     <title>Motel Bela Vista</title>
     <meta name="description" content="Motel Bela Vista em São Leopoldo - RS: suítes com privacidade, conforto e discrição. Atendimento 24 horas." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />

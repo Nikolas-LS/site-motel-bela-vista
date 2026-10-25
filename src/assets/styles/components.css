@@ -10,14 +10,14 @@
 .glass {
   background: var(--glass);
   border-radius: 16px;
-  box-shadow: 0 0 0 8px rgba(255, 255, 255, 0.55);
+  box-shadow: 0 0 0 8px rgba(var(--halo), 0.55);
   backdrop-filter: blur(10px);
 }
 
 .dark-frame {
   background: #2b2b2b;
   border-radius: 24px;
-  box-shadow: 0 0 0 8px rgba(255, 255, 255, 0.25), var(--shadow);
+  box-shadow: 0 0 0 8px rgba(var(--halo), 0.25), var(--shadow);
   overflow: hidden;
   position: relative;
 }
@@ -27,11 +27,11 @@
   align-items: center;
   gap: 0.5rem;
   background: var(--white);
-  border: 1px solid #fff;
+  border: 1px solid var(--white);
   border-radius: 999px;
   padding: 0.5rem 1rem;
   font-size: 0.8125rem;
-  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.4), 6px 8px 12px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 0 0 4px rgba(var(--halo), 0.4), 6px 8px 12px rgba(0, 0, 0, 0.08);
   transition:
     transform 0.45s var(--ease-soft),
     background 0.34s var(--ease-soft),
@@ -71,12 +71,12 @@
   display: inline-flex;
   align-items: center;
   gap: 1rem;
-  background: var(--ink);
-  color: #fff;
+  background: var(--btn-bg);
+  color: var(--btn-fg);
   padding: 0.45rem 0.45rem 0.45rem 1.5rem;
   border-radius: 999px;
   font-size: 1rem;
-  box-shadow: 0 0 0 8px rgba(255, 255, 255, 0.45), inset 0 -3px 6px rgba(255, 255, 255, 0.12);
+  box-shadow: 0 0 0 8px rgba(var(--halo), 0.45), inset 0 -3px 6px rgba(255, 255, 255, 0.12);
   transition:
     transform 0.5s var(--ease-soft),
     scale 0.45s var(--ease-soft),
@@ -97,12 +97,12 @@
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.12);
+  background: var(--btn-arrow-bg);
   display: grid;
   place-items: center;
   overflow: hidden;
   font-size: 1.2rem;
-  color: rgba(255, 255, 255, 0.7);
+  color: var(--btn-arrow-fg);
   transition:
     background 0.45s var(--ease-soft),
     color 0.45s var(--ease-soft),

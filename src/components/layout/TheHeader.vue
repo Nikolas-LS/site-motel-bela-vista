@@ -4,11 +4,15 @@ import IconFacebook from '~icons/simple-icons/facebook'
 import IconInstagram from '~icons/simple-icons/instagram'
 import IconWhatsapp from '~icons/simple-icons/whatsapp'
 import IconArrowUp from '~icons/solar/arrow-right-up-linear'
+import IconMoon from '~icons/solar/moon-bold'
+import IconSun from '~icons/solar/sun-bold'
 import logo from '@/assets/images/logo.png'
 import { navLinks } from '@/data/navigation'
+import { useTheme } from '@/composables/useTheme'
 import { site } from '@/data/site'
 import { reservationLink, whatsappLink } from '@/utils/whatsapp'
 
+const { theme, toggle: toggleTheme } = useTheme()
 const isOpen = ref(false)
 const menuRoot = ref(null)
 
@@ -39,6 +43,18 @@ onBeforeUnmount(() => {
     </a>
 
     <div ref="menuRoot" class="menu-wrap">
+      <button
+        v-magnetic="0.25"
+        class="theme-btn"
+        type="button"
+        :aria-label="theme === 'dark' ? 'Ativar tema claro' : 'Ativar tema escuro'"
+        :title="theme === 'dark' ? 'Tema claro' : 'Tema escuro'"
+        @click="toggleTheme"
+      >
+        <IconSun v-if="theme === 'dark'" class="icon" />
+        <IconMoon v-else class="icon" />
+      </button>
+
       <button
         v-magnetic="0.25"
         class="menu-btn"
@@ -96,14 +112,14 @@ onBeforeUnmount(() => {
 .wordmark {
   display: inline-flex;
   align-items: center;
-  background: #fff;
+  background: var(--white);
   border-radius: 999px;
   padding: 0.45rem;
-  box-shadow: 0 0 0 6px rgba(255, 255, 255, 0.4), 6px 8px 14px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 0 6px rgba(var(--halo), 0.4), 6px 8px 14px rgba(0, 0, 0, 0.1);
   transition: transform 0.5s var(--ease-soft), box-shadow 0.45s var(--ease-soft);
 }
 .wordmark:hover {
-  box-shadow: 0 0 0 9px rgba(255, 255, 255, 0.6), 8px 12px 22px rgba(0, 0, 0, 0.16);
+  box-shadow: 0 0 0 9px rgba(var(--halo), 0.6), 8px 12px 22px rgba(0, 0, 0, 0.16);
 }
 .wordmark-badge {
   position: relative;
@@ -127,6 +143,35 @@ onBeforeUnmount(() => {
 /* ===== Botão do menu ===== */
 .menu-wrap {
   position: relative;
+  display: flex;
+  align-items: center;
+  gap: 1.1rem;
+}
+
+/* ===== Botão de tema (claro/escuro) ===== */
+.theme-btn {
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 50%;
+  background: var(--white);
+  color: var(--text);
+  font-size: 1.15rem;
+  box-shadow: 0 0 0 6px rgba(var(--halo), 0.4), 4px 6px 10px rgba(0, 0, 0, 0.1);
+  transition:
+    transform 0.5s var(--ease-soft),
+    scale 0.45s var(--ease-soft),
+    background 0.39s var(--ease-soft),
+    color 0.39s var(--ease-soft);
+}
+.theme-btn:hover {
+  background: var(--red);
+  color: #fff;
+}
+.theme-btn:active {
+  scale: 0.94;
+  transition-duration: 0.14s;
 }
 .menu-btn {
   position: relative;
@@ -139,18 +184,22 @@ onBeforeUnmount(() => {
   border-radius: 999px;
   padding: 0.75rem 1.25rem;
   font-size: 0.9375rem;
-  box-shadow: 0 0 0 6px rgba(255, 255, 255, 0.4);
+  box-shadow: 0 0 0 6px rgba(var(--halo), 0.4);
   transition:
     transform 0.5s var(--ease-soft),
     scale 0.45s var(--ease-soft),
     background 0.39s var(--ease-soft);
 }
 .menu-btn:hover {
-  background: #b81d2a;
+  background: var(--red-hover);
 }
 .menu-btn.open,
 .menu-btn.open:hover {
-  background: var(--ink);
+  background: var(--btn-bg);
+  color: var(--btn-fg);
+}
+.menu-btn.open .menu-bars span {
+  background: var(--btn-fg);
 }
 .menu-btn:active {
   scale: 0.94;
@@ -202,7 +251,7 @@ onBeforeUnmount(() => {
   top: calc(100% + 24px);
   width: min(320px, calc(100vw - 2.5rem));
   padding: 1.25rem;
-  background: #fff;
+  background: var(--white);
   border-radius: 16px;
   box-shadow: var(--ring), var(--shadow);
   opacity: 0;
@@ -293,7 +342,7 @@ onBeforeUnmount(() => {
   border-radius: 50%;
   display: grid;
   place-items: center;
-  background: rgba(0, 0, 0, 0.06);
+  background: var(--soft);
   color: var(--text-2);
   transition: all 0.45s var(--ease-soft);
 }
@@ -310,17 +359,26 @@ onBeforeUnmount(() => {
   }
   .wordmark {
     padding: 0.35rem;
-    box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.4), 4px 6px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 0 4px rgba(var(--halo), 0.4), 4px 6px 10px rgba(0, 0, 0, 0.1);
   }
   .wordmark-badge {
     width: 38px;
     height: 38px;
   }
+  .menu-wrap {
+    gap: 0.85rem;
+  }
+  .theme-btn {
+    width: 2.25rem;
+    height: 2.25rem;
+    font-size: 1rem;
+    box-shadow: 0 0 0 4px rgba(var(--halo), 0.4);
+  }
   .menu-btn {
     gap: 0.5rem;
     padding: 0.5rem 0.95rem;
     font-size: 0.8125rem;
-    box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.4);
+    box-shadow: 0 0 0 4px rgba(var(--halo), 0.4);
   }
   .menu-bars {
     --gap: 3px;

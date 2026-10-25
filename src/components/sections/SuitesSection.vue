@@ -134,7 +134,7 @@ function go(name, event, step) {
 .suite:hover {
   rotate: 0deg;
   translate: 0 -10px;
-  box-shadow: 0 0 0 8px rgba(255, 255, 255, 0.65), 18px 30px 36px rgba(0, 0, 0, 0.16);
+  box-shadow: 0 0 0 8px rgba(var(--halo), 0.65), 18px 30px 36px rgba(0, 0, 0, 0.16);
 }
 /* v-reveal: entra de baixo; depois de visível, o hover volta a controlar o translate */
 .suite.reveal {
@@ -263,8 +263,8 @@ function go(name, event, step) {
   align-items: center;
   gap: 0.4rem;
   padding: 0.5rem 1rem;
-  background: var(--ink);
-  color: #fff;
+  background: var(--btn-bg);
+  color: var(--btn-fg);
   border-radius: 999px;
   font-size: 0.8125rem;
   transition: background 0.37s var(--ease-soft), scale 0.4s var(--ease-soft);

@@ -113,7 +113,7 @@ const { root: statsRoot, display } = useCountUp(stats.map((stat) => stat.value))
 .stat:nth-child(3) { rotate: -0.6deg; }
 .stat:hover {
   rotate: 0deg;
-  box-shadow: 0 0 0 8px rgba(255, 255, 255, 0.65), 16px 24px 30px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 0 0 8px rgba(var(--halo), 0.65), 16px 24px 30px rgba(0, 0, 0, 0.15);
 }
 .stat .numeral small {
   margin-left: 0.1em;

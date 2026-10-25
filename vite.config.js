@@ -5,7 +5,7 @@ import { defineConfig } from 'vite'
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: '/site-motel-bela-vista/',
+  base: '/',
   plugins: [vue(), Icons({ compiler: 'vue3' })],
   resolve: {
     alias: {
