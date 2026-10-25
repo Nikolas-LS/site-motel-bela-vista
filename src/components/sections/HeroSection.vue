@@ -1,16 +1,10 @@
 <script setup>
-import { ref } from 'vue'
 import IconArrow from '~icons/solar/arrow-right-linear'
 import HeroStreams from '@/components/ui/HeroStreams.vue'
 import SplitText from '@/components/ui/SplitText.vue'
-import { useParallax } from '@/composables/useParallax'
-import fachada from '@/assets/images/fachada.jpg'
+import fachada from '@/assets/images/fachada-hero.jpg'
 import { site } from '@/data/site'
 import { reservationLink } from '@/utils/whatsapp'
-
-// Parallax suave na foto da fachada
-const photo = ref(null)
-useParallax(photo)
 </script>
 
 <template>
@@ -36,7 +30,7 @@ useParallax(photo)
     </div>
 
     <figure v-tilt="{ max: 3 }" class="dark-frame hero-frame">
-      <img ref="photo" :src="fachada" alt="Fachada do Motel Bela Vista" fetchpriority="high" />
+      <img :src="fachada" alt="Fachada do Motel Bela Vista" fetchpriority="high" />
     </figure>
   </section>
 </template>
@@ -76,8 +70,8 @@ useParallax(photo)
 }
 .hero-frame {
   width: 100%;
-  max-width: 1100px;
-  aspect-ratio: 16 / 9;
+  max-width: 960px;
+  aspect-ratio: 4 / 3;
   rotate: -0.6deg;
   opacity: 0;
   animation: fade-up 0.7s var(--ease-soft) 0.75s forwards;
@@ -121,9 +115,7 @@ useParallax(photo)
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: 30% 55%;
-  scale: 1.08;
-  will-change: transform;
+  object-position: 30% 35%;
 }
 .hero-frame::after {
   content: '';

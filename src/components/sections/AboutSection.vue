@@ -1,7 +1,7 @@
 <script setup>
 import WordReveal from '@/components/ui/WordReveal.vue'
 import { useCountUp } from '@/composables/useCountUp'
-import fachada from '@/assets/images/fachada.jpg'
+import areaInterna from '@/assets/images/area-interna.jpg'
 import logo from '@/assets/images/logo.png'
 import { stats } from '@/data/stats'
 
@@ -26,7 +26,7 @@ const { root: statsRoot, display } = useCountUp(stats.map((stat) => stat.value))
 
       <div v-reveal="2" class="about-visual">
         <div v-tilt="{ max: 4 }" class="dark-frame about-photo">
-          <img :src="fachada" alt="Fachada do Motel Bela Vista" loading="lazy" />
+          <img :src="areaInterna" alt="Área interna e garagens do Motel Bela Vista" loading="lazy" />
         </div>
         <div class="card about-logo"><img :src="logo" alt="Logotipo Motel Bela Vista" /></div>
       </div>
@@ -76,23 +76,26 @@ const { root: statsRoot, display } = useCountUp(stats.map((stat) => stat.value))
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: 33% 50%;
+  object-position: 55% 50%;
 }
 .about-logo {
   position: absolute;
   left: -2rem;
   bottom: 0;
-  display: grid;
-  place-items: center;
   width: 120px;
   aspect-ratio: 1;
   padding: 0;
   overflow: hidden;
   rotate: -6deg;
 }
+/* centralizada pelo meio do cartão, independente do tamanho da imagem */
 .about-logo img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
   width: 120%;
   max-width: none;
+  translate: -50% -50%;
 }
 
 /* ===== Números ===== */
