@@ -12,6 +12,30 @@ dist
 dist-ssr
 *.local
 
+# Segredos e credenciais
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+id_rsa*
+secrets.*
+credentials.*
+.npmrc
+
+# Ferramentas locais e arquivos de trabalho
+.claude/
+.planning/
+CLAUDE.md
+.firebase/
+.vercel
+.netlify
+*.zip
+Thumbs.db
+Desktop.ini
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
