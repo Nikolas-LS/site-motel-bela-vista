@@ -1,4 +1,4 @@
-/* Estilos que sustentam as diretivas (v-reveal, v-tilt, v-magnetic) e o ripple de clique. */
+/* Estilos que sustentam as diretivas (v-reveal) e o ripple de clique. */
 
 /* v-reveal: fade + subida ao entrar na tela */
 .reveal {
@@ -21,24 +21,6 @@
   stroke-dashoffset: 0;
 }
 
-/* v-tilt: inclinação 3D seguindo o mouse */
-.tilt {
-  transition: transform 0.67s var(--ease-soft);
-  will-change: transform;
-}
-.tilt.is-tilting {
-  transition: transform 0.39s var(--ease-follow); /* segue o mouse com atraso suave */
-}
-
-/* v-magnetic: o elemento "flutua" até o cursor */
-[data-magnetic] {
-  transform: translate(var(--tx, 0px), var(--ty, 0px));
-}
-.is-mag {
-  transition-duration: 0.34s !important;
-  transition-timing-function: var(--ease-follow) !important;
-}
-
 /* Ripple de clique (criado por utils/ripple.js) */
 .ripple {
   position: absolute;
@@ -57,9 +39,8 @@
   to { transform: scale(1); opacity: 0; }
 }
 
-/* Movimento reduzido: mantém os hovers suaves, remove só entradas deslizantes e inclinação */
+/* Movimento reduzido: mantém os hovers suaves, remove só entradas deslizantes */
 @media (prefers-reduced-motion: reduce) {
   .reveal { translate: 0 0; }
-  .tilt { transform: none !important; }
   .draw path { stroke-dashoffset: 0; }
 }

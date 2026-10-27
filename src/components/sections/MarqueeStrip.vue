@@ -1,12 +1,14 @@
 <script setup>
 import { marquee } from '@/data/marquee'
-// A faixa é renderizada duas vezes para o loop de -50% ficar contínuo.
+// A faixa é repetida 8 vezes e o loop anda 25% (2 cópias exatas por ciclo): fica contínuo e
+// sempre sobra texto à direita, mesmo em telas muito largas.
+const COPIES = 8
 </script>
 
 <template>
   <div class="ticker" aria-hidden="true">
     <div class="ticker-track">
-      <div v-for="copy in 2" :key="copy" class="ticker-item">
+      <div v-for="copy in COPIES" :key="copy" class="ticker-item">
         <template v-for="phrase in marquee" :key="phrase"><span>{{ phrase }}</span><i></i></template>
       </div>
     </div>
@@ -26,10 +28,10 @@ import { marquee } from '@/data/marquee'
 .ticker-track {
   display: flex;
   width: max-content;
-  animation: marquee 20s linear infinite;
+  animation: marquee 40s linear infinite;
 }
 @keyframes marquee {
-  to { transform: translateX(-50%); }
+  to { transform: translateX(-25%); }
 }
 
 .ticker-item {

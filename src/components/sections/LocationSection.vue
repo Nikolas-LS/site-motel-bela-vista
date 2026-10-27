@@ -10,7 +10,7 @@ import { site } from '@/data/site'
 <template>
   <section id="localizacao" class="section">
     <div class="location-grid">
-      <div v-reveal v-tilt="{ max: 2 }" class="glass contact-card">
+      <div v-reveal class="glass contact-card">
         <div class="eyebrow left">Localização</div>
         <h2 class="h2 contact-title">Venha nos <span class="tone">visitar</span></h2>
 
@@ -37,7 +37,7 @@ import { site } from '@/data/site'
           </div>
         </div>
 
-        <a v-magnetic class="btn" :href="site.mapsLink" target="_blank" rel="noopener">
+        <a class="btn" :href="site.mapsLink" target="_blank" rel="noopener">
           Como chegar <span class="btn-arrow"><IconArrow class="icon" /></span>
         </a>
       </div>

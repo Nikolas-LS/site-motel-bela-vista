@@ -9,7 +9,7 @@ import { reservationLink } from '@/utils/whatsapp'
       <div v-reveal class="eyebrow">Reservas</div>
       <h2 v-reveal="1" class="h2">Pronto para uma noite <span class="tone">especial?</span></h2>
       <p v-reveal="2" class="body">Fale com a gente pelo WhatsApp e reserve a sua suíte com total discrição.</p>
-      <a v-reveal="3" v-magnetic class="btn on-ink" :href="reservationLink()" target="_blank" rel="noopener">
+      <a v-reveal="3" class="btn on-ink" :href="reservationLink()" target="_blank" rel="noopener">
         Chamar no WhatsApp <span class="btn-arrow"><IconArrow class="icon" /></span>
       </a>
     </section>

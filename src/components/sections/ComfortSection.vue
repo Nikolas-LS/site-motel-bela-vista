@@ -1,5 +1,40 @@
 <script setup>
+import { onBeforeUnmount, onMounted, ref } from 'vue'
 import { comforts } from '@/data/comforts'
+
+// Em telas pequenas (celular) o item fica "ativo" enquanto cruza a faixa central da tela,
+// ao rolar para baixo e também ao voltar para cima. Em telas grandes vale só o hover do mouse.
+// Usa só a largura (e não hover: none), pois alguns PCs não reportam o mouse como hover.
+const grid = ref(null)
+const smallScreen = window.matchMedia('(max-width: 720px)')
+let observer
+
+function start() {
+  observer = new IntersectionObserver(
+    (entries) => {
+      for (const entry of entries) entry.target.classList.toggle('active', entry.isIntersecting)
+    },
+    { rootMargin: '-42% 0px -42% 0px' },
+  )
+  grid.value.querySelectorAll('.comfort').forEach((el) => observer.observe(el))
+}
+
+function stop() {
+  observer?.disconnect()
+  observer = undefined
+  grid.value?.querySelectorAll('.comfort.active').forEach((el) => el.classList.remove('active'))
+}
+
+const sync = () => (smallScreen.matches ? !observer && start() : stop())
+
+onMounted(() => {
+  sync()
+  smallScreen.addEventListener('change', sync)
+})
+onBeforeUnmount(() => {
+  smallScreen.removeEventListener('change', sync)
+  stop()
+})
 </script>
 
 <template>
@@ -9,7 +44,7 @@ import { comforts } from '@/data/comforts'
       <h2 v-reveal="1" class="h2">Tudo para o seu <span class="tone">bem-estar</span></h2>
     </div>
 
-    <div class="comforts-grid">
+    <div ref="grid" class="comforts-grid">
       <div v-for="(comfort, index) in comforts" :key="comfort.title" v-reveal="index % 3" class="comfort">
         <div class="comfort-icon"><component :is="comfort.icon" class="icon" /></div>
         <h3 class="h3">{{ comfort.title }}</h3>
@@ -58,7 +93,8 @@ import { comforts } from '@/data/comforts'
   transform-origin: left;
   transition: transform 0.44s var(--ease-soft);
 }
-.comfort:hover::before {
+.comfort:hover::before,
+.comfort.active::before {
   transform: scaleX(1);
 }
 
@@ -79,7 +115,8 @@ import { comforts } from '@/data/comforts'
     rotate 0.34s var(--ease-soft),
     scale 0.34s var(--ease-soft);
 }
-.comfort:hover .comfort-icon {
+.comfort:hover .comfort-icon,
+.comfort.active .comfort-icon {
   background: var(--red);
   color: #fff;
   rotate: 12deg;
@@ -90,7 +127,8 @@ import { comforts } from '@/data/comforts'
   margin-bottom: 0.5rem;
   transition: color 0.23s var(--ease-soft), translate 0.3s var(--ease-soft);
 }
-.comfort:hover h3 {
+.comfort:hover h3,
+.comfort.active h3 {
   color: var(--red);
   translate: 8px 0;
 }

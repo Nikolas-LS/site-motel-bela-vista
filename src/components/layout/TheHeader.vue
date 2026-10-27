@@ -38,13 +38,12 @@ onBeforeUnmount(() => {
 
 <template>
   <header class="nav">
-    <a v-magnetic="0.2" class="wordmark" href="#inicio" aria-label="Motel Bela Vista - início">
+    <a class="wordmark" href="#inicio" aria-label="Motel Bela Vista - início">
       <span class="wordmark-badge"><img :src="logo" alt="" /></span>
     </a>
 
     <div ref="menuRoot" class="menu-wrap">
       <button
-        v-magnetic="0.25"
         class="theme-btn"
         type="button"
         :aria-label="theme === 'dark' ? 'Ativar tema claro' : 'Ativar tema escuro'"
@@ -56,7 +55,6 @@ onBeforeUnmount(() => {
       </button>
 
       <button
-        v-magnetic="0.25"
         class="menu-btn"
         :class="{ open: isOpen }"
         :aria-expanded="isOpen"

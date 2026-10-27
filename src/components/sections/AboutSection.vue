@@ -25,7 +25,7 @@ const { root: statsRoot, display } = useCountUp(stats.map((stat) => stat.value))
       </div>
 
       <div v-reveal="2" class="about-visual">
-        <div v-tilt="{ max: 4 }" class="dark-frame about-photo">
+        <div class="dark-frame about-photo">
           <img :src="areaInterna" alt="Área interna e garagens do Motel Bela Vista" loading="lazy" />
         </div>
         <div class="card about-logo"><img :src="logo" alt="Logotipo Motel Bela Vista" /></div>
@@ -33,7 +33,7 @@ const { root: statsRoot, display } = useCountUp(stats.map((stat) => stat.value))
     </div>
 
     <div ref="statsRoot" class="stats">
-      <div v-for="(stat, index) in stats" :key="stat.label" v-reveal="index" v-tilt="{ max: 5 }" class="card card-motion stat">
+      <div v-for="(stat, index) in stats" :key="stat.label" v-reveal="index" class="card card-motion stat">
         <div class="numeral">{{ display[index] }}<small>{{ stat.suffix }}</small></div>
         <div class="meta">{{ stat.label }}</div>
       </div>
@@ -140,9 +140,31 @@ const { root: statsRoot, display } = useCountUp(stats.map((stat) => stat.value))
   }
 }
 @media (max-width: 720px) {
+  /* Três números lado a lado, em cartões compactos e centralizados */
   .stats {
-    grid-template-columns: 1fr;
+    gap: 1.25rem; /* maior que 2x o anel de 8px dos cartões, para não encostarem */
     margin-top: 3rem;
+  }
+  .stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1.1rem 0.4rem;
+    text-align: center;
+  }
+  .stat:nth-child(1) { rotate: -0.8deg; }
+  .stat:nth-child(2) { rotate: 0.6deg; }
+  .stat:nth-child(3) { rotate: -0.4deg; }
+  .stat .numeral {
+    font-size: 2rem;
+    line-height: 1;
+  }
+  .stat .meta {
+    margin-top: 0.5rem;
+    font-size: 0.6rem;
+    line-height: 1.3;
+    letter-spacing: 0.06em;
   }
   .about-logo {
     left: -0.5rem;

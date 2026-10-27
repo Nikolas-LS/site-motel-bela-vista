@@ -23,13 +23,13 @@ import { reservationLink } from '@/utils/whatsapp'
     </p>
 
     <div class="hero-actions">
-      <a v-magnetic class="btn" :href="reservationLink()" target="_blank" rel="noopener">
+      <a class="btn" :href="reservationLink()" target="_blank" rel="noopener">
         Reservar agora <span class="btn-arrow"><IconArrow class="icon" /></span>
       </a>
       <a class="link" href="#suites">Conheça as suítes</a>
     </div>
 
-    <figure v-tilt="{ max: 3 }" class="dark-frame hero-frame">
+    <figure class="dark-frame hero-frame">
       <img :src="fachada" alt="Fachada do Motel Bela Vista" fetchpriority="high" />
     </figure>
   </section>

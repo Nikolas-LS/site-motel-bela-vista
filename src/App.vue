@@ -8,11 +8,9 @@ import HeroSection from '@/components/sections/HeroSection.vue'
 import LocationSection from '@/components/sections/LocationSection.vue'
 import MarqueeStrip from '@/components/sections/MarqueeStrip.vue'
 import SuitesSection from '@/components/sections/SuitesSection.vue'
-import CursorFollower from '@/components/ui/CursorFollower.vue'
 </script>
 
 <template>
-  <CursorFollower />
   <TheHeader />
   <main>
     <HeroSection />

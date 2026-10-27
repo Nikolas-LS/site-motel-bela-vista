@@ -1,6 +1,7 @@
 <script setup>
-import { reactive } from 'vue'
+import { computed, onBeforeUnmount, reactive, ref, watch } from 'vue'
 import IconArrowUp from '~icons/solar/arrow-right-up-linear'
+import IconClose from '~icons/solar/close-circle-linear'
 import IconPrev from '~icons/solar/alt-arrow-left-linear'
 import IconNext from '~icons/solar/alt-arrow-right-linear'
 import { suites } from '@/data/suites'
@@ -16,8 +17,65 @@ function onScroll(name, event) {
   current[name] = Math.round(el.scrollLeft / el.clientWidth)
 }
 
+// Foto ampliada ao clicar na imagem (null = fechado). Guarda a suíte, a posição e o carrossel do card.
+const expanded = ref(null)
+
+const expandedPhotos = computed(() => (expanded.value ? photosOf(expanded.value.suite) : []))
+
+function openExpanded(suite, index, event) {
+  expanded.value = { suite, index, track: event.currentTarget.parentElement }
+}
+
+function closeExpanded() {
+  const { track, index } = expanded.value
+  // O card volta mostrando a foto em que o usuário parou.
+  track.scrollTo({ left: index * track.clientWidth, behavior: 'instant' })
+  expanded.value = null
+}
+
+// Navega pela galeria ampliada; passa da última para a primeira e vice-versa.
+function step(delta) {
+  const total = expandedPhotos.value.length
+  expanded.value.index = (expanded.value.index + delta + total) % total
+}
+
+const onKeydown = (event) => {
+  if (event.key === 'Escape') closeExpanded()
+  else if (event.key === 'ArrowRight') step(1)
+  else if (event.key === 'ArrowLeft') step(-1)
+}
+
+// Gesto de deslizar no celular.
+let touchX = 0
+const onTouchStart = (event) => {
+  touchX = event.changedTouches[0].clientX
+}
+const onTouchEnd = (event) => {
+  const dx = event.changedTouches[0].clientX - touchX
+  if (Math.abs(dx) > 50 && expandedPhotos.value.length > 1) step(dx < 0 ? 1 : -1)
+}
+
+watch(
+  () => Boolean(expanded.value),
+  (open) => {
+    document.body.style.overflow = open ? 'hidden' : ''
+    if (open) window.addEventListener('keydown', onKeydown)
+    else window.removeEventListener('keydown', onKeydown)
+  },
+)
+onBeforeUnmount(() => {
+  document.body.style.overflow = ''
+  window.removeEventListener('keydown', onKeydown)
+})
+
 function go(name, event, step) {
   const track = event.currentTarget.parentElement.querySelector('.suite-track')
+  const last = track.scrollWidth - track.clientWidth
+  // Na última foto, a seta "próxima" volta para a primeira.
+  if (step > 0 && track.scrollLeft >= last - 1) {
+    track.scrollTo({ left: 0, behavior: 'smooth' })
+    return
+  }
   track.scrollBy({ left: step * track.clientWidth, behavior: 'smooth' })
 }
 </script>
@@ -37,7 +95,6 @@ function go(name, event, step) {
         v-for="(suite, index) in suites"
         :key="suite.name"
         v-reveal="index % 3"
-        v-tilt="{ max: 6 }"
         class="card card-motion suite"
       >
         <div class="suite-photo">
@@ -48,6 +105,10 @@ function go(name, event, step) {
               :src="photo"
               :alt="`Suíte ${suite.name}, foto ${i + 1} (ilustrativa)`"
               loading="lazy"
+              tabindex="0"
+              role="button"
+              @click="openExpanded(suite, i, $event)"
+              @keydown.enter="openExpanded(suite, i, $event)"
             />
           </div>
           <template v-if="photosOf(suite).length > 1">
@@ -61,10 +122,9 @@ function go(name, event, step) {
               <IconPrev />
             </button>
             <button
-              v-show="(current[suite.name] ?? 0) < photosOf(suite).length - 1"
               class="suite-arrow next"
               type="button"
-              aria-label="Próxima foto"
+              :aria-label="(current[suite.name] ?? 0) < photosOf(suite).length - 1 ? 'Próxima foto' : 'Voltar à primeira foto'"
               @click="go(suite.name, $event, 1)"
             >
               <IconNext />
@@ -81,19 +141,69 @@ function go(name, event, step) {
         <div class="suite-body">
           <h3 class="h3 suite-name"><component :is="suite.icon" class="icon" />{{ suite.name }}</h3>
           <p class="body">{{ suite.desc }}</p>
+          <dl class="suite-prices">
+            <div v-for="(item, i) in suite.prices" :key="item.label" class="suite-price" :style="{ '--i': i }">
+              <dt>{{ item.label }}</dt>
+              <dd>{{ item.value }}</dd>
+              <dd v-if="item.note" class="suite-note">*{{ item.note }}</dd>
+            </div>
+          </dl>
         </div>
         <div class="suite-foot">
-          <span class="suite-price">{{ suite.price }}</span>
           <a class="suite-link" :href="suiteLink(suite.name)" target="_blank" rel="noopener">
             Consultar <IconArrowUp class="icon" />
           </a>
         </div>
       </article>
     </div>
+
+    <Teleport to="body">
+      <Transition name="lightbox">
+        <div
+          v-if="expanded"
+          class="lightbox"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Foto ampliada"
+          @click.self="closeExpanded"
+          @touchstart.passive="onTouchStart"
+          @touchend.passive="onTouchEnd"
+        >
+          <img
+            :src="expandedPhotos[expanded.index]"
+            :alt="`Suíte ${expanded.suite.name}, foto ${expanded.index + 1} (ilustrativa)`"
+          />
+          <button class="lightbox-close" type="button" aria-label="Fechar foto" @click="closeExpanded">
+            <IconClose />
+          </button>
+          <template v-if="expandedPhotos.length > 1">
+            <button class="lightbox-arrow prev" type="button" aria-label="Foto anterior" @click="step(-1)">
+              <IconPrev />
+            </button>
+            <button class="lightbox-arrow next" type="button" aria-label="Próxima foto" @click="step(1)">
+              <IconNext />
+            </button>
+            <div class="lightbox-count" aria-live="polite">
+              {{ expanded.index + 1 }} / {{ expandedPhotos.length }}
+            </div>
+          </template>
+        </div>
+      </Transition>
+    </Teleport>
   </section>
 </template>
 
 <style scoped>
+/* Mais respiro entre o rabisco e os cards */
+.section-head {
+  margin-bottom: 7rem;
+}
+@media (max-width: 720px) {
+  .section-head {
+    margin-bottom: 5.5rem;
+  }
+}
+
 /* ===== Rabisco sob o título ===== */
 .scribble {
   position: absolute;
@@ -122,7 +232,7 @@ function go(name, event, step) {
   grid-column: span 2;
   display: flex;
   flex-direction: column;
-  padding: 1rem 1rem 1.5rem;
+  padding: 1rem 1rem 1rem;
   rotate: var(--r, 0deg);
 }
 .suite:nth-child(1) { --r: -1.4deg; }
@@ -150,7 +260,7 @@ function go(name, event, step) {
 /* ===== Conteúdo do card ===== */
 .suite-photo {
   position: relative;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 5 / 4;
   margin-bottom: 1.4rem;
   border-radius: 10px;
   overflow: hidden;
@@ -171,6 +281,95 @@ function go(name, event, step) {
   height: 100%;
   object-fit: cover;
   scroll-snap-align: center;
+  cursor: zoom-in;
+}
+
+/* ===== Foto ampliada ===== */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.88);
+  cursor: zoom-out;
+}
+.lightbox img {
+  /* limitado pela janela (100% não resolve dentro do grid) */
+  max-width: min(calc(100vw - 4rem), 1400px);
+  max-height: calc(100vh - 4rem);
+  max-height: calc(100dvh - 4rem);
+  border-radius: 12px;
+  object-fit: contain;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  cursor: default;
+}
+.lightbox-close {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.14);
+  color: #fff;
+  font-size: 1.75rem;
+  cursor: pointer;
+  transition: background 0.3s var(--ease-soft);
+}
+.lightbox-close:hover,
+.lightbox-arrow:hover {
+  background: var(--red);
+}
+.lightbox-arrow {
+  position: absolute;
+  top: 50%;
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  translate: 0 -50%;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.14);
+  color: #fff;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: background 0.3s var(--ease-soft);
+}
+.lightbox-arrow.prev { left: 1.25rem; }
+.lightbox-arrow.next { right: 1.25rem; }
+@media (max-width: 720px) {
+  .lightbox-arrow {
+    width: 2.1rem;
+    height: 2.1rem;
+    font-size: 1.15rem;
+  }
+  .lightbox-arrow.prev { left: 0.6rem; }
+  .lightbox-arrow.next { right: 0.6rem; }
+}
+.lightbox-count {
+  position: absolute;
+  bottom: 1.25rem;
+  left: 50%;
+  translate: -50% 0;
+  padding: 0.3rem 0.8rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.14);
+  color: #fff;
+  font-size: 0.8rem;
+  font-variant-numeric: tabular-nums;
+  pointer-events: none;
+}
+.lightbox-enter-active,
+.lightbox-leave-active {
+  transition: opacity 0.3s var(--ease-soft);
+}
+.lightbox-enter-from,
+.lightbox-leave-to {
+  opacity: 0;
 }
 
 .suite-arrow {
@@ -222,6 +421,9 @@ function go(name, event, step) {
 
 .suite-body {
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  container-type: inline-size;
   padding: 0 0.6rem;
 }
 .suite-name {
@@ -241,19 +443,124 @@ function go(name, event, step) {
 
 .suite-foot {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
-  margin-top: 1.25rem;
-  padding: 1.1rem 0.6rem 0;
+  margin-top: 0.8rem;
+  padding: 0.7rem 0.6rem 0;
   border-top: 1px solid var(--hair);
 }
-.suite-price {
-  font-size: 1.15rem;
-  letter-spacing: -0.03em;
-  transition: color 0.4s var(--ease-soft);
+
+/* ===== Valores ===== */
+.suite-prices {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+  /* margin-top: auto empurra os preços para o rodapé; a sobra de altura fica acima deles */
+  margin: auto 0 0;
+  padding-top: 0.7rem;
 }
-.suite:hover .suite-price {
+/* Altura fixa: todas as caixas têm o mesmo tamanho, com ou sem o "*com hidro" */
+.suite-price {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.25rem;
+  height: 4.6rem;
+  padding: 0 0.4rem;
+  text-align: center;
+  background: rgba(var(--halo), 0.3);
+  border: 1px solid var(--hair);
+  border-radius: 14px;
+}
+/* O pernoite é o destaque da linha */
+.suite-price:nth-child(2) {
+  border-color: color-mix(in srgb, var(--red) 55%, transparent);
+}
+.suite-price dt {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+.suite-price dd {
+  margin: 0;
+  font-size: 1.45rem;
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+.suite-price dd {
+  white-space: nowrap;
+}
+.suite-price .suite-note {
+  font-size: 0.7rem;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: 0.02em;
   color: var(--red);
+}
+
+/* PC: descrição em uma linha só (reticências se algum texto não couber) */
+@media (min-width: 1101px) {
+  .suite-body .body {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+}
+
+/* Card estreito (celular): três linhas, rótulo à esquerda e valor à direita */
+@container (max-width: 380px) {
+  .suite-prices {
+    grid-template-columns: 1fr;
+    gap: 0.45rem;
+  }
+  .suite-price {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    height: auto;
+    padding: 0.6rem 1rem;
+    border-radius: 12px;
+    text-align: left;
+  }
+  .suite-price dt {
+    font-size: 0.75rem;
+  }
+  .suite-price dt {
+    order: 1;
+  }
+  /* "*com hidro" fica logo ao lado do rótulo, no meio da linha */
+  .suite-price .suite-note {
+    order: 2;
+    flex: 1;
+    font-size: 0.68rem;
+    text-align: left;
+  }
+  .suite-price dd:not(.suite-note) {
+    order: 3;
+    font-size: 1.2rem;
+    text-align: right;
+  }
+}
+
+/* Os valores entram em sequência quando o card aparece */
+.suite.visible .suite-price {
+  animation: price-in 0.6s var(--ease-soft) calc(0.35s + var(--i) * 0.12s) backwards;
+}
+@keyframes price-in {
+  from {
+    opacity: 0;
+    translate: 0 14px;
+    scale: 0.88;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .suite.visible .suite-price {
+    animation: none;
+  }
 }
 
 .suite-link {

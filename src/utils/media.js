@@ -5,5 +5,5 @@ export const prefersReducedMotion = () =>
 export const hasFinePointer = () =>
   window.matchMedia('(hover: hover) and (pointer: fine)').matches
 
-// Efeitos que dependem do mouse (tilt, ímã, cursor personalizado).
+// Efeitos que dependem do mouse.
 export const canUsePointerEffects = () => hasFinePointer() && !prefersReducedMotion()

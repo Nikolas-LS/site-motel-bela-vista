@@ -45,7 +45,7 @@
   flex-shrink: 0;
 }
 
-/* Cards que flutuam e se inclinam (suítes e números): entrada, elevação e tilt suaves. */
+/* Cards que flutuam (suítes e números): entrada e elevação suaves. */
 .card-motion {
   transition:
     rotate 0.46s var(--ease-soft),
@@ -53,14 +53,6 @@
     box-shadow 0.46s var(--ease-soft),
     opacity 0.46s var(--ease-soft),
     transform 0.5s var(--ease-soft);
-}
-.card-motion.is-tilting {
-  transition:
-    rotate 0.46s var(--ease-soft),
-    translate 0.46s var(--ease-soft),
-    box-shadow 0.46s var(--ease-soft),
-    opacity 0.46s var(--ease-soft),
-    transform 0.44s var(--ease-follow);
 }
 
 /* ===== Botões ===== */
