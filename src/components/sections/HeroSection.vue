@@ -26,7 +26,7 @@ import { reservationLink } from '@/utils/whatsapp'
       <a class="btn" :href="reservationLink()" target="_blank" rel="noopener">
         Reservar agora <span class="btn-arrow"><IconArrow class="icon" /></span>
       </a>
-      <a class="link" href="#suites">Conheça as suítes</a>
+      <a class="link" href="/suites">Conheça as suítes</a>
     </div>
 
     <figure class="dark-frame hero-frame">

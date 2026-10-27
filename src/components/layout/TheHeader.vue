@@ -38,7 +38,7 @@ onBeforeUnmount(() => {
 
 <template>
   <header class="nav">
-    <a class="wordmark" href="#inicio" aria-label="Motel Bela Vista - início">
+    <a class="wordmark" href="/" aria-label="Motel Bela Vista - início">
       <span class="wordmark-badge"><img :src="logo" alt="" /></span>
     </a>
 
